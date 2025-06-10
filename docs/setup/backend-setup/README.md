@@ -54,7 +54,7 @@ python src/backend-setup/verify_setup.py
    python run.py
    ```
 
-3. The server will be available at: http://localhost:5000
+3. The server will be available at: http://localhost:5001
 
 ## What the Setup Does
 

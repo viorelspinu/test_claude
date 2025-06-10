@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { ApiError } from '../services/api.js';
 import { MESSAGES } from '../utils/constants.js';
 
@@ -14,13 +14,19 @@ const useApi = () => {
   // Execute an API call with automatic state management
   const execute = useCallback(async (apiCall, options = {}) => {
     const { 
-      loadingMessage = null,
       successMessage = null,
       errorMessage = null,
       onSuccess = null,
       onError = null,
-      resetDataOnStart = true 
+      resetDataOnStart = true,
+      preventConcurrent = true
     } = options;
+
+    // Prevent concurrent requests if already loading
+    if (preventConcurrent && loading) {
+      console.warn('API call prevented: already loading');
+      return null;
+    }
 
     setLoading(true);
     setError(null);
@@ -65,9 +71,14 @@ const useApi = () => {
         onError(err);
       }
       
+      // Don't re-throw network errors to prevent infinite retries
+      if (err instanceof ApiError && err.isNetworkError()) {
+        return null;
+      }
+      
       throw err; // Re-throw to allow caller to handle if needed
     }
-  }, []);
+  }, [loading]);
 
   // Reset all states
   const reset = useCallback(() => {
@@ -86,7 +97,7 @@ const useApi = () => {
     setLoading(isLoading);
   }, []);
 
-  return {
+  return useMemo(() => ({
     loading,
     error,
     data,
@@ -94,7 +105,7 @@ const useApi = () => {
     reset,
     clearError,
     setLoadingState
-  };
+  }), [loading, error, data, execute, reset, clearError, setLoadingState]);
 };
 
 /**

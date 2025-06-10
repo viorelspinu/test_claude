@@ -26,11 +26,33 @@ class TaskService {
       
       const response = await apiClient.get(API_ENDPOINTS.TASKS, cleanParams);
       
-      // Handle the response wrapper format
+      // Handle different response formats and validate task IDs
+      let tasks = [];
+      if (Array.isArray(response)) {
+        tasks = response;
+      } else if (response.tasks && Array.isArray(response.tasks)) {
+        tasks = response.tasks;
+      } else if (response.data && Array.isArray(response.data)) {
+        tasks = response.data;
+      }
+      
+      // Validate and filter out tasks without valid IDs
+      const validTasks = tasks.filter(task => {
+        if (!task || typeof task.id === 'undefined' || task.id === null) {
+          console.error('Task missing ID:', task);
+          return false;
+        }
+        return true;
+      });
+      
+      if (validTasks.length !== tasks.length) {
+        console.warn(`Filtered out ${tasks.length - validTasks.length} tasks with invalid IDs`);
+      }
+      
       return {
-        tasks: response.data?.tasks || [],
-        total: response.data?.total || 0,
-        filtered: response.data?.filtered || 0
+        tasks: validTasks,
+        total: response.pagination?.total || validTasks.length,
+        filtered: response.pagination?.total || validTasks.length
       };
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -46,7 +68,27 @@ class TaskService {
   async getTask(taskId) {
     try {
       const response = await apiClient.get(API_ENDPOINTS.TASK_BY_ID(taskId));
-      return response.data;
+      
+      // Extract the task from different response formats
+      let task = null;
+      if (response.task) {
+        task = response.task;
+      } else if (response.id) {
+        task = response;
+      }
+      
+      // Validate the task has an ID and matches the requested ID
+      if (!task || typeof task.id === 'undefined' || task.id === null) {
+        console.error('Fetched task missing ID:', response);
+        throw new ApiError('Server did not return a valid task ID', 500, 'INVALID_RESPONSE');
+      }
+      
+      if (String(task.id) !== String(taskId)) {
+        console.error('Fetched task ID mismatch:', { expected: taskId, received: task.id });
+        throw new ApiError('Server returned task with wrong ID', 500, 'ID_MISMATCH');
+      }
+      
+      return task;
     } catch (error) {
       console.error(`Error fetching task ${taskId}:`, error);
       throw error;
@@ -94,7 +136,24 @@ class TaskService {
       }
       
       const response = await apiClient.post(API_ENDPOINTS.TASKS, payload);
-      return response.data;
+      
+      // Extract the task from different response formats
+      let task = null;
+      if (response.task) {
+        task = response.task;
+      } else if (response.id) {
+        task = response;
+      } else if (Array.isArray(response) && response.length > 0) {
+        task = response[0];
+      }
+      
+      // Validate the task has an ID
+      if (!task || typeof task.id === 'undefined' || task.id === null) {
+        console.error('Created task missing ID:', response);
+        throw new ApiError('Server did not return a valid task ID', 500, 'INVALID_RESPONSE');
+      }
+      
+      return task;
     } catch (error) {
       console.error('Error creating task:', error);
       throw error;
@@ -154,7 +213,27 @@ class TaskService {
       }
       
       const response = await apiClient.put(API_ENDPOINTS.TASK_BY_ID(taskId), sanitizedUpdates);
-      return response.data;
+      
+      // Extract the task from different response formats
+      let task = null;
+      if (response.task) {
+        task = response.task;
+      } else if (response.id) {
+        task = response;
+      }
+      
+      // Validate the task has an ID and matches the requested ID
+      if (!task || typeof task.id === 'undefined' || task.id === null) {
+        console.error('Updated task missing ID:', response);
+        throw new ApiError('Server did not return a valid task ID', 500, 'INVALID_RESPONSE');
+      }
+      
+      if (String(task.id) !== String(taskId)) {
+        console.error('Updated task ID mismatch:', { expected: taskId, received: task.id });
+        throw new ApiError('Server returned task with wrong ID', 500, 'ID_MISMATCH');
+      }
+      
+      return task;
     } catch (error) {
       console.error(`Error updating task ${taskId}:`, error);
       throw error;
@@ -192,7 +271,7 @@ class TaskService {
   async getTaskStats() {
     try {
       const response = await apiClient.get(API_ENDPOINTS.TASK_STATS);
-      return response.data;
+      return response;
     } catch (error) {
       console.error('Error fetching task stats:', error);
       throw error;

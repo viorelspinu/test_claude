@@ -99,7 +99,7 @@ docker-build: ## Build Docker image
 
 docker-run: ## Run Docker container
 	@echo "$(GREEN)Running Docker container...$(NC)"
-	docker run -p 5000:5000 -e FLASK_ENV=development todo-backend
+	docker run -p 5001:5001 -e FLASK_ENV=development todo-backend
 
 ##@ Utilities
 shell: ## Open Flask shell

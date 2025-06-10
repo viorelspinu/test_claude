@@ -27,7 +27,7 @@
     "test:all": "npm run test -- --watchAll=false && npm run test:integration",
     "setup": "npm install && npm run server:install && npm run server:init",
     "clean": "rm -rf node_modules build && cd ../backend && rm -rf __pycache__ app/__pycache__ instance/*.db",
-    "health": "curl -f http://localhost:5000/api/health && curl -f http://localhost:3000"
+    "health": "curl -f http://localhost:5001/api/health && curl -f http://localhost:3000"
   },
   "eslintConfig": {
     "extends": [
@@ -55,5 +55,5 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5001"
 }

@@ -8,7 +8,7 @@
 import { apiClient, ApiError } from '../../services/api';
 
 // Mock server URL for testing
-const TEST_BASE_URL = 'http://localhost:5000/api';
+const TEST_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
 
 describe('API Integration Tests', () => {
   let testTaskId = null;
@@ -21,7 +21,7 @@ describe('API Integration Tests', () => {
         throw new Error('API not available');
       }
     } catch (error) {
-      console.warn('API server may not be running. These tests require the backend server to be running on port 5000.');
+      console.warn('API server may not be running. These tests require the backend server to be running on port 5001.');
       // You might want to skip tests or use a different approach here
     }
   });

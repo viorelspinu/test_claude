@@ -386,16 +386,18 @@ const TaskList = ({
         {/* Task Items */}
         {!loading && !error && processedTasks.length > 0 && (
           <div className={`task-items ${viewMode}`}>
-            {processedTasks.map(task => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onUpdate={handleTaskUpdate}
-                onDelete={handleTaskDelete}
-                onEdit={handleEditTask}
-                isEditing={editingTask && editingTask.id === task.id}
-              />
-            ))}
+            {processedTasks
+              .filter(task => task && typeof task.id !== 'undefined' && task.id !== null)
+              .map(task => (
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  onUpdate={handleTaskUpdate}
+                  onDelete={handleTaskDelete}
+                  onEdit={handleEditTask}
+                  isEditing={editingTask && editingTask.id === task.id}
+                />
+              ))}
           </div>
         )}
       </div>

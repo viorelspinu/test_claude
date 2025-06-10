@@ -321,7 +321,7 @@ describe('Full Stack E2E Tests', () => {
     beforeAll(async () => {
       // Check if real API is available
       try {
-        const response = await fetch('http://localhost:5000/api/health');
+        const response = await fetch('http://localhost:5001/api/health');
         if (!response.ok) {
           throw new Error('API not available');
         }

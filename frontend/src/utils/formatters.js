@@ -160,7 +160,16 @@ export const calculateTaskStats = (tasks) => {
  * @returns {array} Sorted tasks array
  */
 export const sortTasks = (tasks, sortBy = 'created_at', order = 'desc') => {
-  const sortedTasks = [...tasks].sort((a, b) => {
+  // Filter out invalid tasks before sorting
+  const validTasks = tasks.filter(task => {
+    if (!task || typeof task.id === 'undefined' || task.id === null) {
+      console.warn('Sorting: filtering out task without valid ID:', task);
+      return false;
+    }
+    return true;
+  });
+  
+  const sortedTasks = [...validTasks].sort((a, b) => {
     let valueA, valueB;
     
     switch (sortBy) {
@@ -199,6 +208,11 @@ export const sortTasks = (tasks, sortBy = 'created_at', order = 'desc') => {
  */
 export const filterTasks = (tasks, filters = {}) => {
   return tasks.filter(task => {
+    // Validate task has required properties
+    if (!task || typeof task.id === 'undefined' || task.id === null) {
+      console.warn('Filtering out task without valid ID:', task);
+      return false;
+    }
     // Filter by completion status
     if (filters.completed !== undefined) {
       const isCompleted = filters.completed === 'true' || filters.completed === true;

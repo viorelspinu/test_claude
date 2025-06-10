@@ -41,7 +41,8 @@ const useTasks = (initialParams = {}) => {
         errorMessage: 'Failed to load tasks'
       }
     );
-  }, [queryParams, fetchApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryParams]);
 
   // Create a new task
   const createTask = useCallback(async (taskData) => {
@@ -49,28 +50,49 @@ const useTasks = (initialParams = {}) => {
       () => taskService.createTask(taskData),
       {
         successMessage: MESSAGES.SUCCESS_CREATE,
-        errorMessage: 'Failed to create task'
+        errorMessage: 'Failed to create task',
+        onError: (error) => {
+          // Prevent infinite retries on error
+          console.error('Task creation failed:', error);
+        }
       }
     );
 
     if (result) {
-      // Add new task to local state
-      setTasks(prev => [result, ...prev]);
+      // Validate the created task has an ID before adding to state
+      if (typeof result.id !== 'undefined' && result.id !== null) {
+        // Add new task to local state
+        setTasks(prev => [result, ...prev]);
+      } else {
+        console.error('Created task missing ID, not adding to local state:', result);
+        // Refresh tasks from server to get the proper data
+        fetchTasks();
+      }
       
-      // Refresh tasks to ensure consistency
-      fetchTasks();
+      // No need to refresh - we already have the new task in local state
     }
 
     return result;
-  }, [createApi, fetchTasks]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Update an existing task
   const updateTask = useCallback(async (taskId, updates) => {
+    // Validate taskId
+    if (typeof taskId === 'undefined' || taskId === null) {
+      console.error('updateTask called with invalid taskId:', taskId);
+      throw new Error('Task ID is required for update operation');
+    }
+
     const result = await updateApi.execute(
       () => taskService.updateTask(taskId, updates),
       {
         successMessage: MESSAGES.SUCCESS_UPDATE,
-        errorMessage: 'Failed to update task'
+        errorMessage: 'Failed to update task',
+        onError: (error) => {
+          // Prevent infinite retries on error
+          console.error('Task update failed:', error);
+        }
       }
     );
 
@@ -84,26 +106,36 @@ const useTasks = (initialParams = {}) => {
     }
 
     return result;
-  }, [updateApi]);
+  }, []);
 
   // Delete a task
   const deleteTask = useCallback(async (taskId) => {
+    // Validate taskId
+    if (typeof taskId === 'undefined' || taskId === null) {
+      console.error('deleteTask called with invalid taskId:', taskId);
+      throw new Error('Task ID is required for delete operation');
+    }
+
     await deleteApi.execute(
       () => taskService.deleteTask(taskId),
       {
         successMessage: MESSAGES.SUCCESS_DELETE,
-        errorMessage: 'Failed to delete task'
+        errorMessage: 'Failed to delete task',
+        onError: (error) => {
+          // Prevent infinite retries on error
+          console.error('Task deletion failed:', error);
+        }
       }
     );
 
     // Remove task from local state
     setTasks(prev => prev.filter(task => task.id !== taskId));
-  }, [deleteApi]);
+  }, []);
 
   // Toggle task completion
   const toggleTaskCompletion = useCallback(async (taskId, completed) => {
     return updateTask(taskId, { completed });
-  }, [updateTask]);
+  }, []);
 
   // Bulk update tasks
   const bulkUpdateTasks = useCallback(async (taskUpdates) => {
@@ -111,17 +143,19 @@ const useTasks = (initialParams = {}) => {
       () => taskService.bulkUpdateTasks(taskUpdates),
       {
         successMessage: 'Tasks updated successfully',
-        errorMessage: 'Failed to update some tasks'
+        errorMessage: 'Failed to update some tasks',
+        onError: (error) => {
+          console.error('Bulk update failed:', error);
+        }
       }
     );
 
     if (result) {
-      // Refresh tasks to ensure consistency
-      fetchTasks();
+      // No need to refresh - bulk updates should update local state individually
     }
 
     return result;
-  }, [updateApi, fetchTasks]);
+  }, []);
 
   // Mark all tasks as completed
   const completeAllTasks = useCallback(async () => {
@@ -134,7 +168,7 @@ const useTasks = (initialParams = {}) => {
     if (updates.length > 0) {
       return bulkUpdateTasks(updates);
     }
-  }, [tasks, bulkUpdateTasks]);
+  }, [tasks]);
 
   // Delete all completed tasks
   const deleteCompletedTasks = useCallback(async () => {
@@ -143,17 +177,20 @@ const useTasks = (initialParams = {}) => {
     for (const task of completedTasks) {
       await deleteTask(task.id);
     }
-  }, [tasks, deleteTask]);
+  }, [tasks]);
 
   // Fetch task statistics
   const fetchStats = useCallback(async () => {
     return statsApi.execute(
       () => taskService.getTaskStats(),
       {
-        errorMessage: 'Failed to load task statistics'
+        errorMessage: 'Failed to load task statistics',
+        onError: (error) => {
+          console.error('Stats fetch failed:', error);
+        }
       }
     );
-  }, [statsApi]);
+  }, []);
 
   // Update query parameters
   const updateQueryParams = useCallback((newParams) => {
@@ -168,17 +205,17 @@ const useTasks = (initialParams = {}) => {
   // Search tasks
   const searchTasks = useCallback(async (searchTerm) => {
     return fetchTasks({ search: searchTerm });
-  }, [fetchTasks]);
+  }, []);
 
   // Filter tasks by status
   const filterByStatus = useCallback(async (completed) => {
     return fetchTasks({ completed: completed ? 'true' : 'false' });
-  }, [fetchTasks]);
+  }, []);
 
   // Filter tasks by priority
   const filterByPriority = useCallback(async (priority) => {
     return fetchTasks({ priority });
-  }, [fetchTasks]);
+  }, []);
 
   // Refresh all data
   const refresh = useCallback(async () => {
@@ -186,7 +223,7 @@ const useTasks = (initialParams = {}) => {
       fetchTasks(),
       fetchStats()
     ]);
-  }, [fetchTasks, fetchStats]);
+  }, []);
 
   // Calculate local statistics from current tasks
   const localStats = useMemo(() => {
@@ -210,13 +247,36 @@ const useTasks = (initialParams = {}) => {
 
   // Load initial data on mount or when query params change
   useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+    const loadTasks = async () => {
+      const mergedParams = { ...queryParams };
+      
+      fetchApi.execute(
+        () => taskService.getTasks(mergedParams),
+        {
+          successMessage: 'Tasks loaded successfully',
+          errorMessage: 'Failed to load tasks'
+        }
+      );
+    };
+    
+    loadTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queryParams]);
 
   // Update tasks state when fetch succeeds
   useEffect(() => {
     if (fetchApi.data) {
-      setTasks(fetchApi.data.tasks || []);
+      const tasksData = fetchApi.data.tasks || [];
+      // Filter out any tasks without valid IDs
+      const validTasks = tasksData.filter(task => 
+        task && typeof task.id !== 'undefined' && task.id !== null
+      );
+      
+      if (validTasks.length !== tasksData.length) {
+        console.warn(`Filtered out ${tasksData.length - validTasks.length} tasks with invalid IDs in useTasks`);
+      }
+      
+      setTasks(validTasks);
     }
   }, [fetchApi.data]);
 
@@ -289,7 +349,9 @@ const useTasks = (initialParams = {}) => {
       createApi.clearError();
       updateApi.clearError();
       deleteApi.clearError();
-    }, [fetchApi, createApi, updateApi, deleteApi])
+      statsApi.clearError();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
   };
 };
 
@@ -307,7 +369,10 @@ export const useTask = (taskId = null) => {
     const result = await api.execute(
       () => taskService.getTask(id),
       {
-        errorMessage: 'Failed to load task'
+        errorMessage: 'Failed to load task',
+        onError: (error) => {
+          console.error('Task fetch failed:', error);
+        }
       }
     );
 
@@ -316,7 +381,7 @@ export const useTask = (taskId = null) => {
     }
 
     return result;
-  }, [taskId, api]);
+  }, [taskId]);
 
   const updateTask = useCallback(async (updates) => {
     if (!taskId) return null;
@@ -325,7 +390,10 @@ export const useTask = (taskId = null) => {
       () => taskService.updateTask(taskId, updates),
       {
         successMessage: MESSAGES.SUCCESS_UPDATE,
-        errorMessage: 'Failed to update task'
+        errorMessage: 'Failed to update task',
+        onError: (error) => {
+          console.error('Task update failed:', error);
+        }
       }
     );
 
@@ -334,7 +402,7 @@ export const useTask = (taskId = null) => {
     }
 
     return result;
-  }, [taskId, api]);
+  }, [taskId]);
 
   const deleteTask = useCallback(async () => {
     if (!taskId) return;
@@ -343,19 +411,23 @@ export const useTask = (taskId = null) => {
       () => taskService.deleteTask(taskId),
       {
         successMessage: MESSAGES.SUCCESS_DELETE,
-        errorMessage: 'Failed to delete task'
+        errorMessage: 'Failed to delete task',
+        onError: (error) => {
+          console.error('Task delete failed:', error);
+        }
       }
     );
 
     setTask(null);
-  }, [taskId, api]);
+  }, [taskId]);
 
   // Load task on mount or when ID changes
   useEffect(() => {
     if (taskId) {
       fetchTask();
     }
-  }, [taskId, fetchTask]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskId]);
 
   return {
     task,
@@ -364,7 +436,7 @@ export const useTask = (taskId = null) => {
     fetchTask,
     updateTask,
     deleteTask,
-    clearError: api.clearError
+    clearError: useCallback(() => api.clearError(), [])
   };
 };
 

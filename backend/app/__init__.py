@@ -33,7 +33,13 @@ def create_app(config_name=None):
     migrate.init_app(app, db)
     
     # Configure CORS with settings from config
-    cors.init_app(app, origins=app.config['CORS_ORIGINS'])
+    cors.init_app(
+        app, 
+        origins=app.config['CORS_ORIGINS'],
+        methods=app.config['CORS_METHODS'],
+        allow_headers=app.config['CORS_HEADERS'],
+        supports_credentials=True
+    )
     
     # Import models to register them with SQLAlchemy
     from app import models

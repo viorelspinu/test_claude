@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Set environment variables
 ENV PATH /app/node_modules/.bin:$PATH
-ENV REACT_APP_API_BASE_URL=http://localhost:5000/api
+ENV REACT_APP_API_BASE_URL=http://localhost:5001/api
 
 # Install dependencies
 COPY package*.json ./

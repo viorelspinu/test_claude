@@ -14,6 +14,24 @@ const TaskItem = ({
   const [isUpdating, setIsUpdating] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
+  // Validate task object and ID
+  if (!task) {
+    console.error('TaskItem rendered with null/undefined task');
+    return null;
+  }
+
+  if (typeof task.id === 'undefined' || task.id === null) {
+    console.error('TaskItem rendered with task missing ID:', task);
+    return (
+      <div className="task-item error">
+        <div className="task-error">
+          <span className="error-icon">⚠️</span>
+          <span>Task missing ID - cannot display</span>
+        </div>
+      </div>
+    );
+  }
+
   const priorityInfo = formatPriority(task.priority);
   const statusInfo = formatStatus(task.completed, task.completed_at);
 

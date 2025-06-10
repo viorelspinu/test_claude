@@ -321,7 +321,7 @@ except Exception as e:
             print(f"2. Start development server:")
             print(f"   cd {self.backend_dir}")
             print(f"   python run.py")
-            print(f"3. Server will be available at: http://localhost:5000")
+            print(f"3. Server will be available at: http://localhost:5001")
             
             return True
             

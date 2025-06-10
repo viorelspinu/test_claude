@@ -120,7 +120,7 @@ def test_error_cases():
 def main():
     """Run all tests"""
     print("Starting API Tests...")
-    print("Make sure the Flask server is running on localhost:5000")
+    print("Make sure the Flask server is running on localhost:5001")
     
     try:
         # Test basic connectivity

@@ -13,6 +13,18 @@ from app.models import Task
 from app.extensions import db
 
 
+@api_bp.route('/health', methods=['GET'])
+def health_check():
+    """
+    GET /api/health - Health check endpoint
+    """
+    return jsonify({
+        "status": "healthy",
+        "message": "Todo API is running",
+        "timestamp": datetime.utcnow().isoformat()
+    })
+
+
 def create_error_response(code, message, details=None, status_code=400):
     """
     Create standardized error response
@@ -117,8 +129,12 @@ def get_tasks():
         search_query = request.args.get('search', '').strip()
         sort_field = request.args.get('sort', 'created_at')
         sort_order = request.args.get('order', 'desc')
-        limit = int(request.args.get('limit', 100))
-        offset = int(request.args.get('offset', 0))
+        
+        # Handle pagination parameters
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', request.args.get('limit', 100)))
+        limit = per_page
+        offset = (page - 1) * per_page if page > 0 else 0
         
         # Validate parameters
         if sort_field not in ['created_at', 'updated_at', 'title', 'priority']:
@@ -181,13 +197,25 @@ def get_tasks():
         # Prepare response
         task_list = [task.to_dict() for task in tasks]
         
+        # Calculate pagination info
+        current_page = page
+        total_pages = (total_count + per_page - 1) // per_page if per_page > 0 else 1
+        has_next = current_page < total_pages
+        has_prev = current_page > 1
+        
         response_data = {
             "tasks": task_list,
-            "total": total_count,
-            "filtered": len(task_list)
+            "pagination": {
+                "total": total_count,
+                "page": current_page,
+                "per_page": per_page,
+                "pages": total_pages,
+                "has_next": has_next,
+                "has_prev": has_prev
+            }
         }
         
-        return jsonify(create_success_response(response_data))
+        return jsonify(response_data)
         
     except ValueError as e:
         return create_error_response(
@@ -228,26 +256,43 @@ def create_task():
         is_valid, errors = validate_task_data(data, required_fields=['title'])
         
         if not is_valid:
+            if 'title' in errors:
+                return create_error_response(
+                    "MISSING_TITLE",
+                    errors['title'],
+                    status_code=400
+                )
+            if 'priority' in errors:
+                return create_error_response(
+                    "INVALID_PRIORITY",
+                    errors['priority'],
+                    status_code=400
+                )
             return create_error_response(
                 "VALIDATION_ERROR",
                 "Invalid task data",
                 errors,
-                status_code=422
+                status_code=400
             )
         
         # Create new task
         task = Task(
             title=data['title'].strip(),
             description=data.get('description', '').strip() or None,
-            priority=data.get('priority', 'Medium')
+            priority=data.get('priority', 'Medium'),
+            completed=data.get('completed', False)
         )
+        
+        # Set completed_at if task is created as completed
+        if data.get('completed', False):
+            task.completed_at = datetime.utcnow()
         
         # Save to database
         db.session.add(task)
         db.session.commit()
         
         # Return created task
-        return jsonify(create_success_response(task.to_dict())), 201
+        return jsonify({"task": task.to_dict()}), 201
         
     except Exception as e:
         db.session.rollback()
@@ -329,7 +374,7 @@ def update_task(task_id):
         # Save changes
         db.session.commit()
         
-        return jsonify(create_success_response(task.to_dict()))
+        return jsonify({"task": task.to_dict()})
         
     except Exception as e:
         db.session.rollback()
@@ -370,6 +415,93 @@ def delete_task(task_id):
         )
 
 
+@api_bp.route('/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    """
+    GET /api/tasks/{id} - Get specific task
+    """
+    try:
+        task = Task.query.get(task_id)
+        if not task:
+            return create_error_response(
+                "TASK_NOT_FOUND",
+                f"Task with id {task_id} not found",
+                status_code=404
+            )
+        
+        return jsonify({"task": task.to_dict()})
+        
+    except Exception as e:
+        return create_error_response(
+            "INTERNAL_ERROR",
+            "An error occurred while retrieving the task",
+            status_code=500
+        )
+
+
+@api_bp.route('/tasks/bulk', methods=['PUT'])
+def bulk_update_tasks():
+    """
+    PUT /api/tasks/bulk - Bulk update tasks
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or 'task_ids' not in data or 'updates' not in data:
+            return create_error_response(
+                "INVALID_REQUEST",
+                "Request must contain task_ids and updates",
+                status_code=400
+            )
+        
+        task_ids = data['task_ids']
+        updates = data['updates']
+        
+        # Validate updates
+        is_valid, errors = validate_task_data(updates)
+        if not is_valid:
+            return create_error_response(
+                "VALIDATION_ERROR",
+                "Invalid update data",
+                errors,
+                status_code=422
+            )
+        
+        # Get tasks to update
+        tasks = Task.query.filter(Task.id.in_(task_ids)).all()
+        
+        updated_tasks = []
+        for task in tasks:
+            # Apply updates
+            if 'title' in updates:
+                task.title = updates['title'].strip()
+            if 'description' in updates:
+                task.description = updates['description'].strip() or None
+            if 'priority' in updates:
+                task.priority = updates['priority']
+            if 'completed' in updates:
+                task.completed = updates['completed']
+                if updates['completed'] and not task.completed_at:
+                    task.completed_at = datetime.utcnow()
+                elif not updates['completed']:
+                    task.completed_at = None
+            
+            task.updated_at = datetime.utcnow()
+            updated_tasks.append(task.to_dict())
+        
+        db.session.commit()
+        
+        return jsonify({"tasks": updated_tasks})
+        
+    except Exception as e:
+        db.session.rollback()
+        return create_error_response(
+            "INTERNAL_ERROR",
+            "An error occurred while updating tasks",
+            status_code=500
+        )
+
+
 @api_bp.route('/tasks/stats', methods=['GET'])
 def get_task_stats():
     """
@@ -379,7 +511,11 @@ def get_task_stats():
         # Get basic counts
         total_tasks = Task.query.count()
         completed_tasks = Task.query.filter(Task.completed == True).count()
-        incomplete_tasks = total_tasks - completed_tasks
+        pending_tasks = total_tasks - completed_tasks
+        
+        # Calculate completion rate
+        completion_rate = (completed_tasks / total_tasks * 100) if total_tasks > 0 else 0
+        completion_rate = round(completion_rate, 2)
         
         # Get priority breakdown
         high_priority = Task.query.filter(Task.priority == 'High').count()
@@ -387,17 +523,18 @@ def get_task_stats():
         low_priority = Task.query.filter(Task.priority == 'Low').count()
         
         stats_data = {
-            "total": total_tasks,
-            "completed": completed_tasks,
-            "incomplete": incomplete_tasks,
-            "by_priority": {
-                "High": high_priority,
-                "Medium": medium_priority,
-                "Low": low_priority
+            "total_tasks": total_tasks,
+            "completed_tasks": completed_tasks,
+            "pending_tasks": pending_tasks,
+            "completion_rate": completion_rate,
+            "priority_breakdown": {
+                "high": high_priority,
+                "medium": medium_priority,
+                "low": low_priority
             }
         }
         
-        return jsonify(create_success_response(stats_data))
+        return jsonify({"stats": stats_data})
         
     except Exception as e:
         return create_error_response(

@@ -27,7 +27,13 @@ export const SORT_ORDER = {
 
 export const API_ENDPOINTS = {
   TASKS: '/tasks',
-  TASK_BY_ID: (id) => `/tasks/${id}`,
+  TASK_BY_ID: (id) => {
+    if (typeof id === 'undefined' || id === null) {
+      console.error('API_ENDPOINTS.TASK_BY_ID called with invalid ID:', id);
+      throw new Error('Task ID is required for API endpoint');
+    }
+    return `/tasks/${id}`;
+  },
   TASK_STATS: '/tasks/stats'
 };
 

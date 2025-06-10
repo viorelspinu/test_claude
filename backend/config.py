@@ -15,7 +15,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # CORS settings
-    CORS_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
+    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
+    CORS_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+    CORS_HEADERS = ['Content-Type', 'Authorization', 'X-Requested-With']
     
     # API settings
     API_VERSION = 'v1'

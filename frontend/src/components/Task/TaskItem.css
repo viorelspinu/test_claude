@@ -10,6 +10,24 @@
   position: relative;
 }
 
+/* Error state styling */
+.task-item.error {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+}
+
+.task-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c53030;
+  font-weight: 500;
+}
+
+.task-error .error-icon {
+  font-size: 1.2rem;
+}
+
 .task-item:hover {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   border-color: #cbd5e0;

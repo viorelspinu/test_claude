@@ -87,7 +87,7 @@ def seed_database():
 def check_api_health():
     """Check if the API is running and healthy"""
     try:
-        response = requests.get('http://localhost:5000/api/health', timeout=5)
+        response = requests.get('http://localhost:5001/api/health', timeout=5)
         if response.status_code == 200:
             data = response.json()
             print("✅ API is healthy!")
@@ -105,7 +105,7 @@ def check_api_health():
 
 def test_api_endpoints():
     """Test all API endpoints"""
-    base_url = 'http://localhost:5000/api'
+    base_url = 'http://localhost:5001/api'
     
     print("🧪 Testing API endpoints...")
     
@@ -200,10 +200,10 @@ def run_development_server():
     print("🚀 Starting Flask development server...")
     print("   - Debug mode: ON")
     print("   - Host: 0.0.0.0")
-    print("   - Port: 5000")
+    print("   - Port: 5001")
     print("   - CORS origins: http://localhost:3000, http://127.0.0.1:3000")
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
 
 
 if __name__ == '__main__':
