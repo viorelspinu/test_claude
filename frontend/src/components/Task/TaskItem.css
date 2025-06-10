@@ -1,0 +1,415 @@
+/* TaskItem Component Styles */
+
+.task-item {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.task-item:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e0;
+  transform: translateY(-1px);
+}
+
+.task-item.completed {
+  background-color: #f7fafc;
+  border-color: #e2e8f0;
+  opacity: 0.85;
+}
+
+.task-item.editing {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+/* Task Header */
+.task-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.task-main-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/* Completion Checkbox */
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e0;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.task-checkbox:hover {
+  border-color: #4299e1;
+  background-color: #ebf8ff;
+}
+
+.task-checkbox.checked {
+  background-color: #48bb78;
+  border-color: #48bb78;
+}
+
+.task-checkbox.checked:hover {
+  background-color: #38a169;
+  border-color: #38a169;
+}
+
+.task-checkbox:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkmark {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Task Title Section */
+.task-title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2d3748;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.task-title.completed-text {
+  text-decoration: line-through;
+  color: #718096;
+}
+
+/* Task Meta Information */
+.task-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+}
+
+/* Priority Badge */
+.priority-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.priority-badge.priority-high {
+  background-color: #fed7d7;
+  color: #c53030;
+  border: 1px solid #feb2b2;
+}
+
+.priority-badge.priority-medium {
+  background-color: #feebc8;
+  color: #dd6b20;
+  border: 1px solid #fbd38d;
+}
+
+.priority-badge.priority-low {
+  background-color: #c6f6d5;
+  color: #276749;
+  border: 1px solid #9ae6b4;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.status-badge.status-completed {
+  background-color: #c6f6d5;
+  color: #276749;
+}
+
+.status-badge.status-pending {
+  background-color: #bee3f8;
+  color: #2c5282;
+}
+
+/* Task Date */
+.task-date {
+  color: #718096;
+  font-size: 0.75rem;
+}
+
+/* Action Buttons */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.action-btn:hover {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+  transform: translateY(-1px);
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.edit-btn:hover {
+  color: #4299e1;
+  border-color: #4299e1;
+  background-color: #ebf8ff;
+}
+
+.delete-btn:hover {
+  color: #e53e3e;
+  border-color: #e53e3e;
+  background-color: #fed7d7;
+}
+
+/* Updating Indicator */
+.updating-indicator {
+  display: flex;
+  align-items: center;
+  color: #718096;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e2e8f0;
+  border-top: 2px solid #4299e1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Task Description */
+.task-description {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.task-description p {
+  margin: 0 0 0.5rem 0;
+  color: #4a5568;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.task-description p.completed-text {
+  color: #a0aec0;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: #4299e1;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.expand-btn:hover {
+  color: #3182ce;
+}
+
+/* Task Timestamps */
+.task-timestamps {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+  background-color: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 4px;
+}
+
+.timestamp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+}
+
+.timestamp-row:last-child {
+  margin-bottom: 0;
+}
+
+.timestamp-label {
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.timestamp-value {
+  color: #718096;
+}
+
+/* Delete Confirmation Modal */
+.delete-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.delete-confirm-modal {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.delete-confirm-modal h4 {
+  margin: 0 0 1rem 0;
+  color: #2d3748;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.delete-confirm-modal p {
+  margin: 0 0 0.5rem 0;
+  color: #4a5568;
+  line-height: 1.4;
+}
+
+.task-title-preview {
+  font-style: italic;
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem !important;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.confirm-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.confirm-btn.delete-btn {
+  background-color: #e53e3e;
+  color: white;
+  border-color: #e53e3e;
+}
+
+.confirm-btn.delete-btn:hover:not(:disabled) {
+  background-color: #c53030;
+  border-color: #c53030;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .task-item {
+    padding: 0.75rem;
+  }
+  
+  .task-header {
+    gap: 0.5rem;
+  }
+  
+  .task-main-content {
+    gap: 0.5rem;
+  }
+  
+  .task-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .action-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+  
+  .delete-confirm-modal {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+  
+  .confirm-actions {
+    flex-direction: column;
+  }
+}

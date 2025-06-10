@@ -1,11 +1,12 @@
 # Flask and core dependencies
 Flask==2.3.0
-Flask-SQLAlchemy==3.0.0
+Flask-SQLAlchemy==3.1.1
 Flask-CORS==4.0.0
 Flask-Migrate==4.0.0
 
 # Additional useful packages
 python-dotenv==1.0.0
+Werkzeug==2.3.7
 
 # Development and testing dependencies
 pytest==7.4.0
