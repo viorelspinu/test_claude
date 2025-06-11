@@ -1,7 +1,7 @@
 tasks:
   - id: "001"
     title: "Setup Flask Backend Structure"
-    description: "Create basic Flask app structure with entry point"
+    description: "Create basic Flask app structure with entry point and CORS configuration"
     priority: "high"
     status: "pending"
     estimated_effort: "small"

@@ -66,6 +66,8 @@ These roles are conceptual — all are performed by the orchestrator, in sequenc
 
   * Validates the visible effect of the change.
   * Writes results to `/tests/reports/{task_id}.json`.
+  * The orchestrator must **store to disk any code written purely for testing purposes**, including test scripts, test harnesses, or mock setups.
+  * These files must be saved with appropriate naming inside `/logs/reports/` for inspection and traceability.
 
 * **Reviewer**
 
