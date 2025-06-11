@@ -1,0 +1,394 @@
+/* TodoStats Component Styles */
+
+.statsContainer {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid #e1e5e9;
+}
+
+/* Header Section */
+.statsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.lastUpdated {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Stat Card */
+.statCard {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 20px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.statIcon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.statContent {
+  flex: 1;
+}
+
+.statTitle {
+  margin: 0 0 4px 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Color Variants */
+.gray {
+  background-color: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.gray .statValue {
+  color: #4b5563;
+}
+
+.green {
+  background-color: #d1fae5;
+  border-color: #a7f3d0;
+}
+
+.green .statValue {
+  color: #065f46;
+}
+
+.blue {
+  background-color: #dbeafe;
+  border-color: #bfdbfe;
+}
+
+.blue .statValue {
+  color: #1e40af;
+}
+
+.red {
+  background-color: #fee2e2;
+  border-color: #fecaca;
+}
+
+.red .statValue {
+  color: #991b1b;
+}
+
+/* Completion Section */
+.completionSection {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.completionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.completionTitle {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.completionPercentage {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3498db;
+}
+
+.progressBarContainer {
+  background: #e5e7eb;
+  border-radius: 12px;
+  height: 24px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.progressBar {
+  background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  position: relative;
+  min-width: 0;
+}
+
+.progressBar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  border-radius: 12px;
+}
+
+.progressBarText {
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.completionSummary {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Alert Section */
+.alert {
+  background: #fef3c7;
+  border: 2px solid #fcd34d;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.alertIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.alertText {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #92400e;
+}
+
+/* Loading State */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5e7eb;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design - Tablet */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 768px) {
+  .statsContainer {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .statsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .lastUpdated {
+    font-size: 0.75rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .statCard {
+    padding: 16px;
+  }
+
+  .statIcon {
+    font-size: 1.5rem;
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+  }
+
+  .completionSection {
+    padding: 20px;
+  }
+
+  .completionPercentage {
+    font-size: 1.25rem;
+  }
+
+  .progressBarContainer {
+    height: 20px;
+  }
+
+  .alert {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .statsContainer {
+    padding: 16px;
+    border-radius: 6px;
+  }
+
+  .statsHeader {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .title {
+    font-size: 1.125rem;
+  }
+
+  .statCard {
+    gap: 12px;
+  }
+
+  .statTitle {
+    font-size: 0.75rem;
+  }
+
+  .statValue {
+    font-size: 1.25rem;
+  }
+
+  .completionSection {
+    padding: 16px;
+  }
+
+  .completionTitle {
+    font-size: 1rem;
+  }
+
+  .progressBarText {
+    font-size: 0.75rem;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .statCard {
+    border-width: 3px;
+  }
+
+  .alert {
+    border-width: 3px;
+  }
+
+  .progressBar {
+    background: #3498db;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .statCard {
+    transition: none;
+  }
+
+  .progressBar {
+    transition: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+
+  .statCard:hover {
+    transform: none;
+  }
+}
+
+/* Dark Mode Support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+  /* Styles for dark mode can be added here when implementing dark theme */
+}
