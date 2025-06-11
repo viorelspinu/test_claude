@@ -1,40 +1,93 @@
 # Todo App Architecture
 
 ## System Overview
-A full-stack todo application with Flask REST API backend and React frontend.
 
-## Architecture
-- **Backend**: Flask web framework with SQLAlchemy ORM
-- **Frontend**: React SPA with modern hooks
-- **Database**: SQLite for data persistence
-- **Communication**: RESTful API with JSON
+Full-stack todo application with Flask backend and React frontend, designed for local development and testing.
 
-## Project Structure
+## Backend Architecture (Flask)
+
+### Structure
 ```
-/
-├── backend/
-│   ├── app.py              # Flask application entry point
-│   ├── models.py           # Todo data model
-│   ├── requirements.txt    # Python dependencies
-│   └── instance/
-│       └── todos.db        # SQLite database
-├── frontend/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── services/       # API service layer
-│   │   └── App.js          # Main app component
-│   ├── package.json        # Node dependencies
-│   └── public/             # Static assets
-└── docs/                   # Documentation
+/src/backend/
+├── app.py              # Flask application entry point
+├── models.py           # Todo data model
+├── routes.py           # API route handlers
+├── database.py         # Database connection and setup
+└── requirements.txt    # Python dependencies
 ```
+
+### Technology Stack
+- Flask: Web framework
+- SQLAlchemy: Database ORM
+- SQLite: Database (file-based)
+- Flask-CORS: Cross-origin resource sharing
+
+### Database Schema
+```sql
+todos (
+    id INTEGER PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+## Frontend Architecture (React)
+
+### Structure
+```
+/src/frontend/
+├── public/
+│   └── index.html
+├── src/
+│   ├── components/
+│   │   ├── TodoList.js
+│   │   ├── TodoItem.js
+│   │   ├── TodoForm.js
+│   │   └── TodoFilter.js
+│   ├── services/
+│   │   └── api.js
+│   ├── App.js
+│   └── index.js
+├── package.json
+└── package-lock.json
+```
+
+### Technology Stack
+- React: UI library
+- Axios: HTTP client for API calls
+- CSS Modules: Component styling
+- Create React App: Build tooling
 
 ## API Design
-- GET /api/todos - Retrieve all todos
-- POST /api/todos - Create new todo
+
+### Endpoints
+- GET /api/todos - List todos (with optional status filter)
+- POST /api/todos - Create todo
 - PUT /api/todos/{id} - Update todo
 - DELETE /api/todos/{id} - Delete todo
 
+### Response Format
+```json
+{
+    "success": true,
+    "data": [...],
+    "message": "Operation completed"
+}
+```
+
 ## Development Workflow
-1. Flask development server on port 5000
-2. React development server on port 3000
-3. CORS enabled for cross-origin requests
+
+1. Backend first: API endpoints with hardcoded data
+2. Database integration: SQLite with SQLAlchemy
+3. Frontend setup: React app with basic components
+4. API integration: Connect frontend to backend
+5. Polish: Error handling, validation, styling
+
+## Deployment Strategy
+
+Local development only:
+- Backend: `python app.py` (Flask dev server)
+- Frontend: `npm start` (React dev server)
+- Database: SQLite file in project directory

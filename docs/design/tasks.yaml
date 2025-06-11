@@ -1,70 +1,80 @@
 tasks:
-  - id: 1
-    name: "Setup Flask backend structure"
-    description: "Create Flask app with basic structure and requirements"
-    priority: high
-    status: pending
+  - id: "001"
+    title: "Setup Flask Backend Structure"
+    description: "Create basic Flask app structure with entry point"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "small"
     dependencies: []
     
-  - id: 2
-    name: "Create Todo model and database"
-    description: "Define Todo model with SQLAlchemy and create database"
-    priority: high
-    status: pending
-    dependencies: [1]
+  - id: "002"
+    title: "Create Todo API Routes"
+    description: "Implement basic API endpoints with hardcoded responses"
+    priority: "high" 
+    status: "pending"
+    estimated_effort: "small"
+    dependencies: ["001"]
     
-  - id: 3
-    name: "Implement GET todos API endpoint"
-    description: "Create endpoint to retrieve all todos"
-    priority: high
-    status: pending
-    dependencies: [2]
+  - id: "003"
+    title: "Setup Database Models"
+    description: "Create SQLAlchemy models and database connection"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "medium"
+    dependencies: ["001"]
     
-  - id: 4
-    name: "Implement POST todos API endpoint"
-    description: "Create endpoint to add new todos"
-    priority: high
-    status: pending
-    dependencies: [2]
+  - id: "004"
+    title: "Integrate Database with API"
+    description: "Connect API routes to database operations"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "medium"
+    dependencies: ["002", "003"]
     
-  - id: 5
-    name: "Implement PUT/DELETE todos API endpoints"
-    description: "Create endpoints to update and delete todos"
-    priority: medium
-    status: pending
-    dependencies: [3, 4]
-    
-  - id: 6
-    name: "Setup React frontend structure"
-    description: "Initialize React app with component structure"
-    priority: high
-    status: pending
+  - id: "005"
+    title: "Setup React Frontend Structure"
+    description: "Create React app with basic component structure"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "small"
     dependencies: []
     
-  - id: 7
-    name: "Create TodoList component"
-    description: "Display list of todos fetched from API"
-    priority: high
-    status: pending
-    dependencies: [6, 3]
+  - id: "006"
+    title: "Create Todo Components"
+    description: "Build TodoList, TodoItem, TodoForm components"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "medium"
+    dependencies: ["005"]
     
-  - id: 8
-    name: "Create AddTodo component"
-    description: "Form component to create new todos"
-    priority: high
-    status: pending
-    dependencies: [6, 4]
+  - id: "007"
+    title: "Setup API Service"
+    description: "Create API client service for backend communication"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "small"
+    dependencies: ["005"]
     
-  - id: 9
-    name: "Add todo toggle and delete functionality"
-    description: "Implement complete/incomplete toggle and delete buttons"
-    priority: medium
-    status: pending
-    dependencies: [7, 5]
+  - id: "008"
+    title: "Connect Frontend to Backend"
+    description: "Integrate React components with API service"
+    priority: "high"
+    status: "pending"
+    estimated_effort: "medium"
+    dependencies: ["006", "007", "004"]
     
-  - id: 10
-    name: "Add error handling and validation"
-    description: "Implement proper error handling for API calls"
-    priority: low
-    status: pending
-    dependencies: [7, 8, 9]
+  - id: "009"
+    title: "Add Todo Filtering"
+    description: "Implement status-based filtering in frontend"
+    priority: "medium"
+    status: "pending"
+    estimated_effort: "small"
+    dependencies: ["008"]
+    
+  - id: "010"
+    title: "Error Handling and Polish"
+    description: "Add error handling, validation, and basic styling"
+    priority: "medium"
+    status: "pending"
+    estimated_effort: "medium"
+    dependencies: ["008"]

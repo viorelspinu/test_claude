@@ -1,27 +1,18 @@
-# 004 - Architect B Review
+# 004 · Architect B Prompt
 
-## Review of Initial Architecture
+**Role:** Architect B (Architecture Review)
+**Task:** Review architecture from Architect A and provide feedback/adjustments
 
-### Strengths
-- Clear separation of concerns between backend and frontend
-- Logical task breakdown with proper dependencies
-- Standard Flask and React patterns
-- Appropriate technology choices for a todo app
+**Review Focus:**
+- Feasibility of proposed structure
+- Task breakdown and dependencies
+- Technology choices
+- Development workflow efficiency
+- Missing considerations
 
-### Recommendations
-1. **Database Location**: Move SQLite to backend root, not instance/
-2. **API Versioning**: Consider /api/v1/ prefix for future extensibility
-3. **Environment Setup**: Add environment configuration files
-4. **Task Granularity**: Task 1 could be split - Flask setup vs requirements
-5. **CORS Setup**: Ensure CORS is explicitly handled in task planning
+**Input Files:**
+- `/docs/design/architecture.md`
+- `/docs/design/tasks.yaml`
+- `/docs/requirements/spec.md`
 
-### Proposed Adjustments
-- Add explicit CORS configuration task
-- Include environment setup as separate task
-- Consider adding basic logging setup
-- Add task for API documentation
-
-### Consensus Decision
-The architecture is sound for a basic todo app. The task roadmap provides a logical progression from backend to frontend integration. Minor adjustments noted above can be incorporated during implementation.
-
-**Architecture Approved** - Proceeding to execution phase.
+**Output:** Feedback and proposed adjustments to architecture
