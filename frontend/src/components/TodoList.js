@@ -9,7 +9,7 @@ function TodoList() {
   const fetchTodos = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/todos');
+      const response = await axios.get('http://localhost:5001/api/todos');
       setTodos(response.data);
       setError(null);
     } catch (err) {
@@ -29,7 +29,7 @@ function TodoList() {
           : todo
       ));
 
-      await axios.put(`http://localhost:5000/api/todos/${todoId}`, {
+      await axios.put(`http://localhost:5001/api/todos/${todoId}`, {
         completed: !currentCompleted
       });
     } catch (err) {
@@ -54,7 +54,7 @@ function TodoList() {
       const originalTodos = [...todos];
       setTodos(todos.filter(todo => todo.id !== todoId));
 
-      await axios.delete(`http://localhost:5000/api/todos/${todoId}`);
+      await axios.delete(`http://localhost:5001/api/todos/${todoId}`);
     } catch (err) {
       // Revert on error
       setTodos(originalTodos);
@@ -67,59 +67,37 @@ function TodoList() {
     fetchTodos();
   }, []);
 
-  if (loading) return <div>Loading todos...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="loading">Loading todos...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="todo-list">
       <h2>Todo List ({todos.length})</h2>
       {todos.length === 0 ? (
-        <p>No todos yet. Add one to get started!</p>
+        <p className="empty-state">No todos yet. Add one to get started!</p>
       ) : (
         <ul>
           {todos.map(todo => (
-            <li 
-              key={todo.id} 
-              className={todo.completed ? 'completed' : ''}
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'space-between',
-                padding: '8px',
-                borderBottom: '1px solid #eee'
-              }}
-            >
+            <li key={todo.id}>
               <div 
+                className="todo-item-content"
                 onClick={() => toggleTodo(todo.id, todo.completed)}
-                style={{ cursor: 'pointer', flex: 1, display: 'flex', alignItems: 'center' }}
               >
-                <span className="status" style={{ marginRight: '8px' }}>
+                <span className="todo-status">
                   {todo.completed ? '✓' : '○'}
                 </span>
-                <span style={{ 
-                  textDecoration: todo.completed ? 'line-through' : 'none',
-                  opacity: todo.completed ? 0.6 : 1,
-                  marginRight: '10px'
-                }}>
+                <span className={`todo-text ${todo.completed ? 'completed' : ''}`}>
                   {todo.text}
                 </span>
-                <small style={{ opacity: 0.7 }}>
+                <small className="todo-date">
                   {new Date(todo.created_at).toLocaleDateString()}
                 </small>
               </div>
               <button 
+                className="delete-btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   deleteTodo(todo.id);
-                }}
-                style={{
-                  background: '#ff4444',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  padding: '4px 8px',
-                  cursor: 'pointer',
-                  fontSize: '12px'
                 }}
               >
                 Delete

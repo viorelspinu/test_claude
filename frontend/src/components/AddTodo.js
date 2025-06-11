@@ -18,7 +18,7 @@ function AddTodo({ onTodoAdded }) {
       setLoading(true);
       setError(null);
       
-      await axios.post('http://localhost:5000/api/todos', {
+      await axios.post('http://localhost:5001/api/todos', {
         text: text.trim()
       });
       
