@@ -8,12 +8,13 @@ Full-stack todo application with Flask backend and React frontend, designed for 
 
 ### Structure
 ```
-/src/backend/
+/backend/
 ├── app.py              # Flask application entry point
 ├── models.py           # Todo data model
 ├── routes.py           # API route handlers
 ├── database.py         # Database connection and setup
-└── requirements.txt    # Python dependencies
+├── requirements.txt    # Python dependencies
+└── todos.db           # SQLite database file
 ```
 
 ### Technology Stack
@@ -37,7 +38,7 @@ todos (
 
 ### Structure
 ```
-/src/frontend/
+/frontend/
 ├── public/
 │   └── index.html
 ├── src/
@@ -51,7 +52,7 @@ todos (
 │   ├── App.js
 │   └── index.js
 ├── package.json
-└── package-lock.json
+└── build/
 ```
 
 ### Technology Stack
