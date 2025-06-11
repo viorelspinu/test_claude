@@ -1,34 +1,54 @@
 import React, { useState } from 'react';
-import './AddTodo.css';
+import axios from 'axios';
 
-function AddTodo({ onAdd }) {
+function AddTodo({ onTodoAdded }) {
   const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const trimmedText = text.trim();
-    if (!trimmedText) {
+    if (!text.trim()) {
+      setError('Please enter a todo text');
       return;
     }
 
-    onAdd(trimmedText);
-    setText('');
+    try {
+      setLoading(true);
+      setError(null);
+      
+      await axios.post('http://localhost:5000/api/todos', {
+        text: text.trim()
+      });
+      
+      setText('');
+      if (onTodoAdded) onTodoAdded();
+    } catch (err) {
+      setError('Failed to add todo');
+      console.error('Error adding todo:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form className="add-todo" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="What needs to be done?"
-        className="add-todo-input"
-      />
-      <button type="submit" className="add-todo-button">
-        Add Todo
-      </button>
-    </form>
+    <div className="add-todo">
+      <h3>Add New Todo</h3>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter todo text..."
+          disabled={loading}
+        />
+        <button type="submit" disabled={loading || !text.trim()}>
+          {loading ? 'Adding...' : 'Add Todo'}
+        </button>
+      </form>
+      {error && <div className="error">{error}</div>}
+    </div>
   );
 }
 

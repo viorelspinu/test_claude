@@ -1,45 +1,29 @@
 # Todo App Requirements Specification
 
 ## Overview
-A simple todo application with Flask REST API backend and React frontend.
+A full-stack todo application with Flask backend and React frontend.
 
 ## Core Features
-1. **Todo Management**
-   - Create new todos with text description
-   - Mark todos as complete/incomplete
-   - Delete todos
-   - View all todos
+- Create, read, update, delete todos
+- Mark todos as complete/incomplete
+- Basic todo list display
+- Persistent storage
 
-2. **User Interface**
-   - Clean, responsive web interface
-   - Add new todo input field
-   - Todo list with checkboxes
-   - Delete buttons for each todo
+## Technical Stack
+- **Backend**: Flask (Python)
+- **Frontend**: React (JavaScript)
+- **Database**: SQLite (simple file-based)
+- **API**: RESTful JSON API
 
-## Technical Requirements
-- **Backend**: Flask with REST API endpoints
-- **Frontend**: React with modern hooks
-- **Data Storage**: Simple JSON file or SQLite for persistence
-- **Communication**: HTTP REST API between frontend and backend
-
-## API Endpoints
-- `GET /api/todos` - List all todos
-- `POST /api/todos` - Create new todo
-- `PUT /api/todos/{id}` - Update todo (toggle completion)
-- `DELETE /api/todos/{id}` - Delete todo
-
-## Data Model
-```
-Todo {
-  id: integer (auto-increment)
-  text: string (required)
-  completed: boolean (default: false)
-  created_at: timestamp
-}
-```
+## User Stories
+1. As a user, I can add a new todo item
+2. As a user, I can view all my todos
+3. As a user, I can mark a todo as complete
+4. As a user, I can delete a todo
+5. As a user, I can edit a todo's text
 
 ## Success Criteria
-- User can add, complete, and delete todos
-- Changes persist between sessions
-- Frontend communicates successfully with backend
-- Application runs locally for development
+- Working web interface
+- Persistent data storage
+- Clean, responsive UI
+- Proper error handling

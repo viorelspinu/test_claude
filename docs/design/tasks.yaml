@@ -1,48 +1,60 @@
 tasks:
-  - id: "setup-backend-structure"
-    title: "Create basic Flask backend structure"
-    description: "Set up backend folder with basic Flask app and requirements"
-    status: "pending"
-    priority: "high"
+  - id: 001
+    name: "Setup Flask backend structure"
+    description: "Create basic Flask app with project structure"
+    status: pending
     
-  - id: "setup-database-model"
-    title: "Create SQLite database and Todo model"
-    description: "Implement database initialization and Todo data model"
-    status: "pending"
-    priority: "high"
+  - id: 002
+    name: "Create Todo model"
+    description: "Define SQLAlchemy Todo model with database"
+    status: pending
     
-  - id: "implement-api-endpoints"
-    title: "Implement REST API endpoints"
-    description: "Create GET, POST, PUT, DELETE endpoints for todos"
-    status: "pending"
-    priority: "high"
+  - id: 003
+    name: "Implement GET todos endpoint"
+    description: "Create API endpoint to list all todos"
+    status: pending
     
-  - id: "setup-cors"
-    title: "Configure CORS for frontend communication"
-    description: "Enable CORS to allow frontend to communicate with backend"
-    status: "pending"
-    priority: "medium"
+  - id: 004
+    name: "Implement POST todos endpoint"
+    description: "Create API endpoint to add new todo"
+    status: pending
     
-  - id: "create-react-components"
-    title: "Build React frontend components"
-    description: "Create TodoList, TodoItem, and AddTodo components"
-    status: "pending"
-    priority: "high"
+  - id: 005
+    name: "Implement PUT todos endpoint"
+    description: "Create API endpoint to update existing todo"
+    status: pending
     
-  - id: "implement-api-integration"
-    title: "Connect frontend to backend API"
-    description: "Implement fetch calls to communicate with Flask API"
-    status: "pending"
-    priority: "high"
+  - id: 006
+    name: "Implement DELETE todos endpoint"
+    description: "Create API endpoint to delete todo"
+    status: pending
     
-  - id: "add-basic-styling"
-    title: "Add basic CSS styling"
-    description: "Style the todo app for better user experience"
-    status: "pending"
-    priority: "low"
+  - id: 007
+    name: "Setup React frontend structure"
+    description: "Create React app with basic component structure"
+    status: pending
     
-  - id: "test-full-integration"
-    title: "Test complete application flow"
-    description: "Verify all CRUD operations work end-to-end"
-    status: "pending"
-    priority: "high"
+  - id: 008
+    name: "Create TodoList component"
+    description: "Display list of todos fetched from API"
+    status: pending
+    
+  - id: 009
+    name: "Create AddTodo component"
+    description: "Form to add new todos via API"
+    status: pending
+    
+  - id: 010
+    name: "Add todo completion toggle"
+    description: "Allow marking todos complete/incomplete"
+    status: pending
+    
+  - id: 011
+    name: "Add todo deletion"
+    description: "Allow deleting todos from frontend"
+    status: pending
+    
+  - id: 012
+    name: "Basic styling and polish"
+    description: "Add CSS for clean, usable interface"
+    status: pending
