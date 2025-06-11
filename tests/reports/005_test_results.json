@@ -1,0 +1,75 @@
+{
+  "task_id": "005",
+  "task_name": "PUT/DELETE todos API endpoints",
+  "test_date": "2025-01-06",
+  "status": "PASSED",
+  "tests": [
+    {
+      "name": "PUT - Update text only",
+      "result": "PASSED",
+      "details": "Successfully updated todo text while preserving completed status"
+    },
+    {
+      "name": "PUT - Toggle completed status",
+      "result": "PASSED", 
+      "details": "Successfully toggled completed from false to true"
+    },
+    {
+      "name": "PUT - Update both fields",
+      "result": "PASSED",
+      "details": "Successfully updated both text and completed fields in single request"
+    },
+    {
+      "name": "PUT - Empty text validation",
+      "result": "PASSED",
+      "details": "Properly rejected empty/whitespace text with HTTP 400"
+    },
+    {
+      "name": "PUT - Invalid completed type",
+      "result": "PASSED",
+      "details": "Properly rejected non-boolean completed value with HTTP 400"
+    },
+    {
+      "name": "PUT - Non-existent ID",
+      "result": "PASSED",
+      "details": "Returned HTTP 404 for non-existent todo ID"
+    },
+    {
+      "name": "DELETE - Existing todo",
+      "result": "PASSED",
+      "details": "Successfully deleted todo ID 9 from database"
+    },
+    {
+      "name": "DELETE - Verification",
+      "result": "PASSED",
+      "details": "Confirmed todo was removed from database"
+    },
+    {
+      "name": "DELETE - Non-existent ID",
+      "result": "PASSED",
+      "details": "Returned HTTP 404 for non-existent todo ID"
+    },
+    {
+      "name": "PUT - Text length validation",
+      "result": "PASSED",
+      "details": "Properly rejected text over 200 characters with HTTP 400"
+    }
+  ],
+  "endpoint_summary": {
+    "put_features": [
+      "Partial updates supported",
+      "Text validation (non-empty, max 200)",
+      "Boolean type checking for completed",
+      "404 handling for missing todos",
+      "Transaction safety with rollback"
+    ],
+    "delete_features": [
+      "Clean removal from database",
+      "404 handling for missing todos",
+      "Success message on deletion",
+      "Transaction safety with rollback"
+    ]
+  },
+  "summary": "All 10 tests passed. PUT and DELETE endpoints fully functional with comprehensive validation and error handling.",
+  "ready_for_review": true
+}

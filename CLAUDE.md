@@ -134,7 +134,7 @@ Periodically write a retro log based on `/reviews/` and `/tests/reports/`, summa
     * `/logs/tasks/` — each task extracted by the Architect must be saved here as `<index>_<task>.md`, and used by the Developer.
   * **Logging is mandatory** — the orchestrator must write the corresponding log file **before** any role executes its action.
   * Logging is a required precondition: **Write log → Then act.**
-  * **Log filenames must start with a number** (e.g. `034_dev_task.md`) to ensure sequential clarity.
+  * **Log filenames must start with a number** (e.g. `034_add-endpoint.md`) to ensure sequential clarity.
   * Use the `/logs/` structure consistently throughout the lifecycle.
   * Each file must begin with a numeric index (e.g. `034_add-endpoint.md`) for clear ordering.
   * Log types include:
@@ -148,3 +148,6 @@ Periodically write a retro log based on `/reviews/` and `/tests/reports/`, summa
   * Logging is a required precondition: **Write log → Then act.**
   * **Log filenames must start with a number** (e.g. `034_dev_task.md`) to ensure sequential clarity.
   * Use folder `/logs/prompts/` with this naming convention throughout the lifecycle.
+
+* Deployment Memory:
+  * deploy backend on 8080, always

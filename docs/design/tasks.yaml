@@ -1,60 +1,70 @@
 tasks:
-  - id: 001
+  - id: 1
     name: "Setup Flask backend structure"
-    description: "Create basic Flask app with project structure"
+    description: "Create Flask app with basic structure and requirements"
+    priority: high
     status: pending
+    dependencies: []
     
-  - id: 002
-    name: "Create Todo model"
-    description: "Define SQLAlchemy Todo model with database"
+  - id: 2
+    name: "Create Todo model and database"
+    description: "Define Todo model with SQLAlchemy and create database"
+    priority: high
     status: pending
+    dependencies: [1]
     
-  - id: 003
-    name: "Implement GET todos endpoint"
-    description: "Create API endpoint to list all todos"
+  - id: 3
+    name: "Implement GET todos API endpoint"
+    description: "Create endpoint to retrieve all todos"
+    priority: high
     status: pending
+    dependencies: [2]
     
-  - id: 004
-    name: "Implement POST todos endpoint"
-    description: "Create API endpoint to add new todo"
+  - id: 4
+    name: "Implement POST todos API endpoint"
+    description: "Create endpoint to add new todos"
+    priority: high
     status: pending
+    dependencies: [2]
     
-  - id: 005
-    name: "Implement PUT todos endpoint"
-    description: "Create API endpoint to update existing todo"
+  - id: 5
+    name: "Implement PUT/DELETE todos API endpoints"
+    description: "Create endpoints to update and delete todos"
+    priority: medium
     status: pending
+    dependencies: [3, 4]
     
-  - id: 006
-    name: "Implement DELETE todos endpoint"
-    description: "Create API endpoint to delete todo"
-    status: pending
-    
-  - id: 007
+  - id: 6
     name: "Setup React frontend structure"
-    description: "Create React app with basic component structure"
+    description: "Initialize React app with component structure"
+    priority: high
     status: pending
+    dependencies: []
     
-  - id: 008
+  - id: 7
     name: "Create TodoList component"
     description: "Display list of todos fetched from API"
+    priority: high
     status: pending
+    dependencies: [6, 3]
     
-  - id: 009
+  - id: 8
     name: "Create AddTodo component"
-    description: "Form to add new todos via API"
+    description: "Form component to create new todos"
+    priority: high
     status: pending
+    dependencies: [6, 4]
     
-  - id: 010
-    name: "Add todo completion toggle"
-    description: "Allow marking todos complete/incomplete"
+  - id: 9
+    name: "Add todo toggle and delete functionality"
+    description: "Implement complete/incomplete toggle and delete buttons"
+    priority: medium
     status: pending
+    dependencies: [7, 5]
     
-  - id: 011
-    name: "Add todo deletion"
-    description: "Allow deleting todos from frontend"
+  - id: 10
+    name: "Add error handling and validation"
+    description: "Implement proper error handling for API calls"
+    priority: low
     status: pending
-    
-  - id: 012
-    name: "Basic styling and polish"
-    description: "Add CSS for clean, usable interface"
-    status: pending
+    dependencies: [7, 8, 9]

@@ -1,53 +1,57 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
-function AddTodo({ onTodoAdded }) {
+function AddTodo({ onAdd, disabled = false }) {
   const [text, setText] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!text.trim()) {
-      setError('Please enter a todo text');
-      return;
-    }
+    const trimmedText = text.trim();
+    if (!trimmedText) return;
 
+    setIsLoading(true);
     try {
-      setLoading(true);
-      setError(null);
-      
-      await axios.post('http://localhost:5001/api/todos', {
-        text: text.trim()
-      });
-      
+      await onAdd(trimmedText);
       setText('');
-      if (onTodoAdded) onTodoAdded();
-    } catch (err) {
-      setError('Failed to add todo');
-      console.error('Error adding todo:', err);
+    } catch (error) {
+      console.error('Error adding todo:', error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="add-todo">
-      <h3>Add New Todo</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter todo text..."
-          disabled={loading}
-        />
-        <button type="submit" disabled={loading || !text.trim()}>
-          {loading ? 'Adding...' : 'Add Todo'}
-        </button>
+    <div className={`add-todo ${disabled ? 'disabled' : ''}`}>
+      <h2>Add New Todo</h2>
+      {disabled && (
+        <div className="offline-warning">
+          📱 Cannot create todos while offline
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="add-todo-form">
+        <div className="input-group">
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder={disabled ? "Offline - cannot create todos" : "Enter your todo..."}
+            maxLength={200}
+            disabled={isLoading || disabled}
+            className="todo-input"
+          />
+          <button 
+            type="submit" 
+            disabled={!text.trim() || isLoading || disabled}
+            className="add-button"
+          >
+            {isLoading ? 'Adding...' : disabled ? 'Offline' : 'Add Todo'}
+          </button>
+        </div>
+        <small className="char-count">
+          {text.length}/200 characters
+        </small>
       </form>
-      {error && <div className="error">{error}</div>}
     </div>
   );
 }

@@ -1,0 +1,61 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.1.130:8080
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 130-890-757
+127.0.0.1 - - [11/Jun/2025 09:29:52] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:29:52] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:29:52] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:29:52] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:29:57] "POST /api/todos HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jun/2025 09:29:59] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:00] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:00] "POST /api/todos HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jun/2025 09:30:03] "OPTIONS /api/todos/14 HTTP/1.1" 200 -
+/Users/viorel/workspace/test_claude/backend/app.py:61: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  todo = Todo.query.get(todo_id)
+127.0.0.1 - - [11/Jun/2025 09:30:03] "PUT /api/todos/14 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:04] "OPTIONS /api/todos/13 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:04] "PUT /api/todos/13 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:05] "OPTIONS /api/todos/12 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:05] "PUT /api/todos/12 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:07] "OPTIONS /api/todos/7 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:07] "PUT /api/todos/7 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:08] "OPTIONS /api/todos/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:30:08] "PUT /api/todos/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:32:46] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:32:46] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:32:46] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:32:46] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:32:48] "POST /api/todos HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jun/2025 09:32:50] "POST /api/todos HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jun/2025 09:32:53] "OPTIONS /api/todos/8 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:32:53] "PUT /api/todos/8 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:34:19] "GET /api/health HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:34:57] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:34:57] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:34:57] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:34:57] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:02] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:02] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:02] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:02] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:12] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:12] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:12] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:12] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:12] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:12] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:13] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:13] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:24] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:24] "OPTIONS /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:24] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:24] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:24] "GET /api/todos HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 09:35:24] "GET /api/todos HTTP/1.1" 200 -
