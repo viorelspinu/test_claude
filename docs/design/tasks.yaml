@@ -1,80 +1,140 @@
 tasks:
-  - id: "001"
-    title: "Setup Flask Backend Structure"
-    description: "Create basic Flask app structure with entry point and CORS configuration"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "small"
+  - id: "01"
+    name: "flask_app_init"
+    description: "Create Flask application entry point with basic initialization"
+    deliverable: "backend/app.py with Flask app creation only"
     dependencies: []
+    test_criteria: "Flask app runs without errors"
     
-  - id: "002"
-    title: "Create Todo API Routes"
-    description: "Implement basic API endpoints with hardcoded responses"
-    priority: "high" 
-    status: "pending"
-    estimated_effort: "small"
-    dependencies: ["001"]
+  - id: "02"
+    name: "flask_cors_setup"
+    description: "Add CORS configuration to Flask application"
+    deliverable: "CORS configuration in backend/app.py"
+    dependencies: ["01"]
+    test_criteria: "CORS headers present in response"
     
-  - id: "003"
-    title: "Setup Database Models"
-    description: "Create SQLAlchemy models and database connection"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "medium"
-    dependencies: ["001"]
-    
-  - id: "004"
-    title: "Integrate Database with API"
-    description: "Connect API routes to database operations"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "medium"
-    dependencies: ["002", "003"]
-    
-  - id: "005"
-    title: "Setup React Frontend Structure"
-    description: "Create React app with basic component structure"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "small"
+  - id: "03"
+    name: "todo_model"
+    description: "Create Todo data model class"
+    deliverable: "backend/models.py with Todo class definition only"
     dependencies: []
+    test_criteria: "Todo class instantiates correctly"
     
-  - id: "006"
-    title: "Create Todo Components"
-    description: "Build TodoList, TodoItem, TodoForm components"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "medium"
-    dependencies: ["005"]
+  - id: "04"
+    name: "storage_functions"
+    description: "Create in-memory storage functions for todos"
+    deliverable: "Storage functions in backend/models.py"
+    dependencies: ["03"]
+    test_criteria: "Storage functions work with Todo instances"
     
-  - id: "007"
-    title: "Setup API Service"
-    description: "Create API client service for backend communication"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "small"
-    dependencies: ["005"]
+  - id: "05"
+    name: "get_todos_endpoint"
+    description: "Implement GET /api/todos endpoint only"
+    deliverable: "GET route in backend/routes.py"
+    dependencies: ["04"]
+    test_criteria: "GET /api/todos returns JSON list"
     
-  - id: "008"
-    title: "Connect Frontend to Backend"
-    description: "Integrate React components with API service"
-    priority: "high"
-    status: "pending"
-    estimated_effort: "medium"
-    dependencies: ["006", "007", "004"]
+  - id: "06"
+    name: "post_todos_endpoint"
+    description: "Implement POST /api/todos endpoint only"
+    deliverable: "POST route in backend/routes.py"
+    dependencies: ["05"]
+    test_criteria: "POST /api/todos creates new todo"
     
-  - id: "009"
-    title: "Add Todo Filtering"
-    description: "Implement status-based filtering in frontend"
-    priority: "medium"
-    status: "pending"
-    estimated_effort: "small"
-    dependencies: ["008"]
+  - id: "07"
+    name: "put_todos_endpoint"
+    description: "Implement PUT /api/todos/{id} endpoint only"
+    deliverable: "PUT route in backend/routes.py"
+    dependencies: ["06"]
+    test_criteria: "PUT /api/todos/{id} updates existing todo"
     
-  - id: "010"
-    title: "Error Handling and Polish"
-    description: "Add error handling, validation, and basic styling"
-    priority: "medium"
-    status: "pending"
-    estimated_effort: "medium"
-    dependencies: ["008"]
+  - id: "08"
+    name: "delete_todos_endpoint"
+    description: "Implement DELETE /api/todos/{id} endpoint only"
+    deliverable: "DELETE route in backend/routes.py"
+    dependencies: ["07"]
+    test_criteria: "DELETE /api/todos/{id} removes todo"
+    
+  - id: "09"
+    name: "backend_requirements"
+    description: "Create Python requirements file"
+    deliverable: "backend/requirements.txt with Flask and dependencies"
+    dependencies: []
+    test_criteria: "pip install -r requirements.txt succeeds"
+    
+  - id: "10"
+    name: "backend_error_handling"
+    description: "Add error handling to API endpoints"
+    deliverable: "Error handling in backend/routes.py"
+    dependencies: ["08"]
+    test_criteria: "API returns proper error responses"
+    
+  - id: "11"
+    name: "backend_testing_setup"
+    description: "Set up pytest configuration for backend"
+    deliverable: "backend/test_app.py with pytest setup"
+    dependencies: ["09"]
+    test_criteria: "pytest runs without errors"
+    
+  - id: "12"
+    name: "react_app_init"
+    description: "Initialize React application with create-react-app"
+    deliverable: "frontend/ directory with CRA setup"
+    dependencies: []
+    test_criteria: "npm start runs React dev server"
+    
+  - id: "13"
+    name: "api_service"
+    description: "Create API service layer for backend communication"
+    deliverable: "frontend/src/services/api.js with HTTP methods"
+    dependencies: ["12"]
+    test_criteria: "API service exports HTTP functions"
+    
+  - id: "14"
+    name: "todo_list_component"
+    description: "Create TodoList component only"
+    deliverable: "frontend/src/components/TodoList.js"
+    dependencies: ["13"]
+    test_criteria: "TodoList component renders without errors"
+    
+  - id: "15"
+    name: "todo_item_component"
+    description: "Create TodoItem component only"
+    deliverable: "frontend/src/components/TodoItem.js"
+    dependencies: ["14"]
+    test_criteria: "TodoItem component renders todo data"
+    
+  - id: "16"
+    name: "todo_form_component"
+    description: "Create TodoForm component only"
+    deliverable: "frontend/src/components/TodoForm.js"
+    dependencies: ["15"]
+    test_criteria: "TodoForm component handles input"
+    
+  - id: "17"
+    name: "app_integration"
+    description: "Integrate components into main App component"
+    deliverable: "frontend/src/App.js with component integration"
+    dependencies: ["16"]
+    test_criteria: "App renders all components correctly"
+    
+  - id: "18"
+    name: "frontend_testing_setup"
+    description: "Set up Jest/React Testing Library configuration"
+    deliverable: "Frontend test configuration and sample test"
+    dependencies: ["17"]
+    test_criteria: "npm test runs without errors"
+    
+  - id: "19"
+    name: "basic_styling"
+    description: "Add basic CSS styling for TodoList component"
+    deliverable: "frontend/src/components/TodoList.css"
+    dependencies: ["18"]
+    test_criteria: "TodoList displays with styling"
+    
+  - id: "20"
+    name: "integration_test"
+    description: "Test full application integration"
+    deliverable: "Both servers running and communicating"
+    dependencies: ["19"]
+    test_criteria: "Full CRUD operations work end-to-end"

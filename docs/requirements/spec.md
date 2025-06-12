@@ -1,38 +1,44 @@
-# Todo App Requirements Specification
+# Todo Application Requirements
 
-## Core Features
+## Overview
+A simple todo application with Flask backend and React frontend.
 
-### Todo Operations
-- Create new todo items with title and description
-- Mark todos as complete/incomplete
-- Edit existing todo items
-- Delete todo items
-- List all todos with status filtering
+## Functional Requirements
 
-### Data Requirements
-- Todo items must persist between sessions
-- Each todo has: id, title, description, completed status, created_at timestamp
-- Support for at least 1000+ todos
+### Core Features
+1. **Todo Management**
+   - Create new todo items
+   - View list of todos
+   - Mark todos as complete/incomplete
+   - Delete todos
+   - Edit todo text
+
+2. **Data Fields**
+   - Todo text/description
+   - Completion status (boolean)
+   - Creation timestamp
+   - Unique identifier
 
 ### User Interface
 - Clean, responsive web interface
-- Real-time updates without page refresh
-- Filter todos by status (all/active/completed)
-- Clear visual distinction between completed and active todos
+- List view of all todos
+- Add new todo form
+- Toggle completion status
+- Delete confirmation
 
 ## Technical Requirements
 
 ### Backend (Flask)
-- RESTful API endpoints for todo CRUD operations
-- JSON data format for API responses
-- SQLite database for data persistence
-- CORS support for frontend communication
+- RESTful API endpoints
+- JSON data format
+- CORS support for frontend
+- In-memory data storage (initial implementation)
 
 ### Frontend (React)
 - Single-page application
 - Component-based architecture
 - State management for todos
-- Responsive design for desktop and mobile
+- API integration
 
 ### API Endpoints
 - GET /api/todos - List all todos
@@ -40,8 +46,7 @@
 - PUT /api/todos/{id} - Update todo
 - DELETE /api/todos/{id} - Delete todo
 
-## Success Criteria
-- User can perform all CRUD operations
-- Data persists between browser sessions
-- Interface is intuitive and responsive
-- No data loss during operations
+## Non-Functional Requirements
+- Simple deployment
+- Development server setup
+- Clean, maintainable code structure
