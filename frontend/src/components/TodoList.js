@@ -1,68 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { getTodos } from '../services/api';
+import React from 'react';
+import TodoItem from './TodoItem';
+import './TodoList.css';
 
 /**
  * TodoList Component
  * Container component for displaying and managing the list of todos
+ * 
+ * @param {Object} props - Component props
+ * @param {Array} props.todos - Array of todo objects
+ * @param {Function} props.onToggle - Callback for toggling todo completion
+ * @param {Function} props.onUpdate - Callback for updating todo text
+ * @param {Function} props.onDelete - Callback for deleting todo
  */
-function TodoList() {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  /**
-   * Fetch todos from API on component mount
-   */
-  useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const todosData = await getTodos();
-        setTodos(todosData || []);
-      } catch (err) {
-        console.error('Failed to fetch todos:', err);
-        setError(err.message || 'Failed to load todos');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTodos();
-  }, []);
-
-  /**
-   * Retry loading todos after error
-   */
-  const handleRetry = () => {
-    setError(null);
-    setLoading(true);
-    // Re-trigger useEffect by forcing re-render
-    setTodos([]);
-  };
-
-  // Loading state
-  if (loading) {
-    return (
-      <div className="todo-list">
-        <div className="loading">Loading todos...</div>
-      </div>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div className="todo-list">
-        <div className="error">
-          <p>Error: {error}</p>
-          <button onClick={handleRetry} className="retry-button">
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
+function TodoList({ todos, onToggle, onUpdate, onDelete }) {
 
   // Empty state
   if (todos.length === 0) {
@@ -81,14 +31,13 @@ function TodoList() {
       <h2>Todo List ({todos.length})</h2>
       <div className="todos-container">
         {todos.map((todo) => (
-          <div key={todo.id} className="todo-item-placeholder">
-            <span className={`todo-text ${todo.completed ? 'completed' : ''}`}>
-              {todo.text}
-            </span>
-            <span className="todo-status">
-              {todo.completed ? '✅' : '⏳'}
-            </span>
-          </div>
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            onToggle={onToggle}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+          />
         ))}
       </div>
     </div>

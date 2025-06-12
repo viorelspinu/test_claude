@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
 .App-logo {
@@ -14,14 +16,95 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem 0;
+  text-align: center;
   color: white;
+}
+
+.App-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.App-header p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.App-main {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.todo-form-section {
+  margin-bottom: 2rem;
+}
+
+.todo-list-section {
+  margin-bottom: 2rem;
+}
+
+/* Loading and error states */
+.app-loading, .app-error {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.app-loading p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+.app-error {
+  border-left: 4px solid #ef4444;
+}
+
+.app-error p {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.retry-button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.retry-button:hover {
+  background: #dc2626;
+}
+
+.App-footer {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .App-link {

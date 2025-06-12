@@ -1,0 +1,235 @@
+/* TodoForm Component Styles */
+
+.todo-form {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+}
+
+.todo-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Input container layout */
+.input-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: stretch;
+}
+
+/* Main input styling */
+.todo-input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1f2937;
+  background: #ffffff;
+  transition: all 0.2s ease-in-out;
+  outline: none;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.todo-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.todo-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.todo-input:disabled {
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.todo-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Add button styling */
+.add-button {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.4);
+}
+
+.add-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+}
+
+.add-button:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Error message styling */
+.form-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.9rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.clear-error-button {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.clear-error-button:hover {
+  background: #fee2e2;
+}
+
+/* Form hint styling */
+.form-hint {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.hint-text {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .todo-form {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .input-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .todo-input {
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .add-button {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.1rem;
+    align-self: stretch;
+  }
+  
+  .form-hint {
+    margin-top: 1rem;
+  }
+  
+  .hint-text {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
+
+/* Focus management for accessibility */
+.todo-input:focus,
+.add-button:focus,
+.clear-error-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .todo-form {
+    border: 2px solid #000000;
+  }
+  
+  .todo-input {
+    border: 2px solid #000000;
+  }
+  
+  .add-button {
+    border: 2px solid #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .todo-input,
+  .add-button,
+  .clear-error-button {
+    transition: none;
+  }
+  
+  .todo-input:focus,
+  .add-button:hover:not(:disabled) {
+    transform: none;
+  }
+  
+  .form-error {
+    animation: none;
+  }
+}

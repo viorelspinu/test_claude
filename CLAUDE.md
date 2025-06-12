@@ -141,3 +141,9 @@ Periodically summarize in `docs/retro/{YYYY-MM-DD}.md` based on `/logs/tests/` a
 * **Task IDs**: two-digit index + descriptive slug (e.g. `03_add-auth-endpoint`).
 * **Log-before-act rule**: **Every** action is **preceded** by its log file.
 * **Source-code layout**: entirely defined by the Architect in `architecture.md`; the Orchestrator does **not** hard-code folders outside of `agentic_flow` and `docs`.
+
+### 5 · Server Configuration
+
+* **Backend Flask server**: Port 8080 (http://localhost:8080)
+* **Frontend React server**: Port 3000 (http://localhost:3000)
+* **API Base URL**: http://localhost:8080/api

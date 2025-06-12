@@ -1,0 +1,111 @@
+{
+  "task_id": "20",
+  "task_name": "integration_test",
+  "timestamp": "2025-06-12T12:47:51.513300",
+  "tests": [
+    {
+      "test": "Backend Server Accessibility",
+      "status": "passed",
+      "details": "Server accessible at http://127.0.0.1:5000/api/todos",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.517167"
+    },
+    {
+      "test": "Frontend Server Accessibility",
+      "status": "passed",
+      "details": "Server accessible at http://localhost:3000",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.519465"
+    },
+    {
+      "test": "GET /api/todos (Empty)",
+      "status": "passed",
+      "details": "Returns empty list: []",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.520294"
+    },
+    {
+      "test": "POST /api/todos",
+      "status": "passed",
+      "details": "Todo created: Integration test todo item",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.521122"
+    },
+    {
+      "test": "CORS Configuration",
+      "status": "passed",
+      "details": "CORS headers present: {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': None, 'Access-Control-Allow-Headers': None}",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.521814"
+    },
+    {
+      "test": "404 Error Handling",
+      "status": "passed",
+      "details": "Returns 404 for invalid endpoint",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.522696"
+    },
+    {
+      "test": "Invalid JSON Handling",
+      "status": "passed",
+      "details": "Returns 400 for invalid JSON",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.523529"
+    },
+    {
+      "test": "Empty Text Validation",
+      "status": "passed",
+      "details": "Returns 400 for empty text",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.524313"
+    },
+    {
+      "test": "GET /api/todos (With Data)",
+      "status": "passed",
+      "details": "Returns 1 todo with correct ID",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.524940"
+    },
+    {
+      "test": "PUT /api/todos/{id}",
+      "status": "passed",
+      "details": "Todo updated to completed: True",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.525642"
+    },
+    {
+      "test": "DELETE /api/todos/{id}",
+      "status": "passed",
+      "details": "Todo deleted successfully",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.526236"
+    },
+    {
+      "test": "DELETE Verification",
+      "status": "passed",
+      "details": "Todo list is empty after deletion",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.526832"
+    },
+    {
+      "test": "Frontend Server Running",
+      "status": "passed",
+      "details": "React development server is accessible",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.526844"
+    },
+    {
+      "test": "Frontend-Backend Integration Ready",
+      "status": "passed",
+      "details": "Both servers running for frontend-backend communication",
+      "error": "",
+      "timestamp": "2025-06-12T12:47:51.526846"
+    }
+  ],
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "error": 0
+  }
+}
