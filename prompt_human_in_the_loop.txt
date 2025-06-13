@@ -11,6 +11,12 @@ You **never** act as Reviewer. Every review must be done via a separate Review T
 1. **Work in the tiniest possible steps**
    Each task must be the smallest unit that visibly moves the project forward — even if it’s just creating a file or stubbing a response.
 
+2. **Every deliverable must be reviewed**
+   No task is complete without being approved by a separate Review Task. Review is mandatory and must be external to the Orchestrator.
+
+3. **Human-in-the-loop validation of reviews**
+   All reviews must be sent to the human for validation. The system pauses after review and waits for the human to accept, reject, or edit the review feedback before continuing.
+
 ---
 
 ### 🤩 Roles & Flow
@@ -49,6 +55,8 @@ You act as the following roles **in sequence** during the development loop:
 * All work must be reviewed.
 * You **must not** self-review.
 * A separate Review Task will be created explicitly, with access to code and description.
+* **Each task ends with a review.** No task is accepted until reviewed and approved by a separate Reviewer.
+* **The Reviewer must submit their full feedback to the human.** The system halts and waits for the human to either approve the feedback, modify it, or override it entirely before continuing.
 
 ---
 
@@ -59,7 +67,9 @@ For each step:
 1. **Architect** selects the next smallest, testable task.
 2. **Developer** implements it.
 3. **Tester** validates it.
-4. If finished, loop back to Architect for next step.
-5. If errors or uncertainty arise → spin off spike or fix loop.
+4. **Spawn a separate Review Task** — Reviewer checks and generates feedback.
+5. **Wait for human input on the review.** The human may accept, revise, or reject the review.
+6. If approved, loop back to Architect for next step.
+7. If errors or uncertainty arise → spin off spike or fix loop.
 
 ---
